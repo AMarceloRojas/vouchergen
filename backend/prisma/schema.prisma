@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Lote {
+  id          Int       @id @default(autoincrement())
+  nombre      String
+  totalItems  Int
+  enviados    Int       @default(0)
+  errores     Int       @default(0)
+  estado      String    @default("PENDIENTE")
+  pdfMaestro  String?
+  creadoEn    DateTime  @default(now())
+  vouchers    Voucher[]
+}
+
+model Voucher {
+  id              Int      @id @default(autoincrement())
+  loteId          Int
+  lote            Lote     @relation(fields: [loteId], references: [id], onDelete: Cascade)
+  orden           String?
+  clienteNombre   String
+  clienteApellido String?
+  clienteEmail    String
+  clienteDni      String?
+  clientePhone    String?
+  direccion       String?
+  distrito        String?
+  ciudad          String?
+  referencia      String?
+  codigoPostal    String?
+  trackingYobel   String?
+  productos       Json
+  total           Float
+  qrCode          String?
+  pdfUrl          String?
+  estado          String   @default("PENDIENTE")
+  creadoEn        DateTime @default(now())
+}
