@@ -146,7 +146,8 @@ export class VouchersService {
         const pdfBuffer = await this.generarPDFVoucher(voucher);
         pdfsGenerados.push(pdfBuffer);
         fs.writeFileSync(path.join(uploadsDir, `voucher_${voucher.id}.pdf`), pdfBuffer);
-
+        
+        await new Promise(resolve => setTimeout(resolve, 500));
         await this.resend.emails.send({
           from: 'Yobel SCM <onboarding@resend.dev>',
           to: voucher.clienteEmail,
