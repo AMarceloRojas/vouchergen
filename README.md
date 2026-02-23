@@ -1,43 +1,70 @@
 # VoucherGen 🎫
 
-Sistema fullstack para generación y envío masivo de vouchers con QR y código de barras.
+Sistema fullstack para generación y envío masivo de vouchers con QR y código de barras, desarrollado con NestJS, React y PostgreSQL.
 
-## ¿Qué hace?
+![CI](https://github.com/AMarceloRojas/vouchergen/actions/workflows/ci.yml/badge.svg)
 
-- Sube un Excel con datos de clientes y pedidos
-- Genera un PDF por cliente con QR + código de barras + productos + total
-- Envía el voucher PDF por correo automáticamente
-- Genera un PDF maestro con todos los vouchers para imprimir
-- Historial de lotes por fecha/hora con opción de eliminar
+## 🚀 Demo en producción
 
-## Stack
+- **Frontend:** https://remarkable-heart-production.up.railway.app
+- **Backend:** https://vouchergen-production.up.railway.app
 
-- **Backend:** NestJS + TypeScript + Prisma + PostgreSQL
-- **Frontend:** React + TypeScript + Vite + Tailwind CSS
-- **PDF:** PDFKit + pdf-lib
-- **Correos:** Resend
-- **Contenedores:** Docker + Docker Compose
+> Credenciales de demo: admin@yobel.com / Yobel2025!
 
-## Correr el proyecto
-```bash
-docker compose up -d
+## ⚙️ Stack
+
+- **Backend:** NestJS + TypeScript + PostgreSQL + Prisma + Docker
+- **Frontend:** React + TypeScript + Vite + TailwindCSS
+- **Autenticación:** JWT + bcrypt
+- **Infraestructura:** Railway + GitHub Actions
+- **Seguridad:** Trivy (escaneo CRITICAL/HIGH en cada push)
+- **Email:** Resend API
+- **PDF:** PDFKit + pdf-lib + bwip-js + QRCode
+
+## ✨ Funcionalidades
+
+- Autenticación JWT con login seguro
+- Sube un Excel con datos de clientes
+- Genera PDF por cliente con QR + código de barras + productos + total
+- Envía correo automático con PDF adjunto a cada cliente
+- Genera PDF maestro con todos los vouchers del lote
+- Historial de lotes por fecha/hora
+- Eliminar lotes con confirmación
+
+## 🏗️ Arquitectura
+```
+Frontend (React) → Backend (NestJS) → PostgreSQL
+                         ↓
+                    Resend API (emails)
+                         ↓
+                  PDFs generados en servidor
 ```
 
-Backend en `http://localhost:3001`  
-Frontend en `http://localhost:5173`
+## 🛠️ Correr localmente
+```bash
+git clone https://github.com/AMarceloRojas/vouchergen.git
+cd vouchergen
 
-## Columnas del Excel
+# Variables de entorno
+cp backend/.env.example backend/.env
+# Editar con tus credenciales
 
-| Columna | Descripción |
-|---|---|
-| Order | Número de orden |
-| Client Name | Nombre del cliente |
-| Client Last Name | Apellido |
-| Email | Correo electrónico |
-| Phone | Teléfono |
-| City | Ciudad |
-| Street | Dirección |
-| distrito | Distrito |
-| tracking Yobel | Código de tracking |
-| sku Name | Nombre del producto |
-| SKU Selling Price | Precio |
+# Levantar con Docker
+docker compose up --build
+```
+
+## 🔒 CI/CD Pipeline
+
+Cada push a `main` ejecuta 4 jobs automáticos:
+
+| Job | Descripción |
+|-----|-------------|
+| Build Backend | Compila NestJS + TypeScript |
+| Build Frontend | Compila React + Vite |
+| Docker Build | Construye ambas imágenes |
+| Security Scan | Trivy escanea vulnerabilidades CRITICAL/HIGH |
+
+## 👤 Autor
+
+**Anthonny Marcelo Rojas**
+[GitHub](https://github.com/AMarceloRojas)
