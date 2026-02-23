@@ -40,11 +40,7 @@ jobs:
       - name: Build backend image
         run: docker build -t vouchergen-backend ./backend
       - name: Build frontend image
-        run: docker build -t vouchergen-frontend ./frontend
-        env:
-          DOCKER_BUILDKIT: 1
-        with:
-          build-args: VITE_API_URL=https://vouchergen-production.up.railway.app
+        run: docker build -t vouchergen-frontend ./frontend --build-arg VITE_API_URL=https://vouchergen-production.up.railway.app
 
   security-scan:
     name: Security Scan
