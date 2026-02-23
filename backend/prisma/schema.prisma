@@ -43,3 +43,9 @@ model Voucher {
   estado          String   @default("PENDIENTE")
   creadoEn        DateTime @default(now())
 }
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  creadoEn  DateTime @default(now())
+}

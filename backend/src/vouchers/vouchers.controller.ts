@@ -1,8 +1,10 @@
-import { Controller, Post, Get, Delete, Param, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Post, Get, Delete, Param, UploadedFile, UseInterceptors, UseGuards } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { VouchersService } from './vouchers.service';
+import { JwtGuard } from '../auth/jwt.guard';
 
 @Controller('vouchers')
+@UseGuards(JwtGuard)
 export class VouchersController {
   constructor(private readonly vouchersService: VouchersService) {}
 
